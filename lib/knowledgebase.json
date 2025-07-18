@@ -1,0 +1,17 @@
+{
+  "windows lambat": "Untuk mengatasi Windows yang lambat, coba langkah berikut:\n1. Restart komputer\n2. Hapus file temporary (ketik %temp% di Run)\n3. Nonaktifkan program startup yang tidak perlu\n4. Jalankan Disk Cleanup\n5. Update Windows dan driver\n6. Scan virus dengan Windows Defender\n7. Pastikan hard disk tidak penuh (<80%)",
+  
+  "wifi tidak connect": "Solusi masalah WiFi tidak bisa connect:\n1. Restart modem/router (cabut kabel 30 detik)\n2. Forget dan reconnect WiFi\n3. Update driver WiFi\n4. Reset network settings\n5. Cek apakah password WiFi benar\n6. Pindah ke channel WiFi yang berbeda\n7. Restart komputer/HP",
+  
+  "laptop overheat": "Cara mengatasi laptop overheat:\n1. Bersihkan debu di kipas dan ventilasi\n2. Gunakan cooling pad\n3. Tutup aplikasi yang tidak perlu\n4. Cek thermal paste (jika perlu ganti)\n5. Pastikan ventilasi tidak tertutup\n6. Kurangi brightness layar\n7. Gunakan di tempat yang dingin",
+  
+  "install driver": "Cara install driver:\n1. Cek model hardware di Device Manager\n2. Download driver dari website resmi manufacturer\n3. Klik kanan pada hardware > Update Driver\n4. Pilih 'Browse my computer for drivers'\n5. Pilih folder driver yang sudah didownload\n6. Restart komputer setelah install\n7. Alternatif: gunakan Driver Booster atau software serupa",
+  
+  "error blue screen": "Solusi Blue Screen of Death (BSOD):\n1. Catat kode error yang muncul\n2. Restart komputer\n3. Boot ke Safe Mode\n4. Update driver yang bermasalah\n5. Jalankan System File Checker (sfc /scannow)\n6. Cek RAM dengan Windows Memory Diagnostic\n7. Jika sering terjadi, backup data dan reinstall Windows",
+  
+  "internet lemot": "Cara mengatasi internet lemot:\n1. Test speed dengan speedtest.net\n2. Restart modem/router\n3. Cek berapa device yang connected\n4. Ganti DNS ke 8.8.8.8 atau 1.1.1.1\n5. Update browser\n6. Clear cache dan cookies\n7. Hubungi provider jika masih lemot",
+  
+  "password wifi lupa": "Cara melihat password WiFi yang lupa:\n1. Buka Control Panel > Network and Sharing Center\n2. Klik nama WiFi yang connected\n3. Klik Wireless Properties\n4. Tab Security > Show characters\n5. Atau buka Command Prompt (admin) ketik: netsh wlan show profile name=\"NamaWiFi\" key=clear\n6. Lihat di bagian Key Content",
+  
+  "hardisk penuh": "Cara mengatasi hard disk penuh:\n1. Jalankan Disk Cleanup\n2. Hapus file temporary (%temp%)\n3. Kosongkan Recycle Bin\n4. Uninstall program yang tidak perlu\n5. Pindahkan file ke external storage\n6. Gunakan Storage Sense di Windows 10/11\n7. Hapus Windows old folder jika ada"
+}
