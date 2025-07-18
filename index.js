@@ -16,16 +16,37 @@ let sock;
 let botActive = process.env.BOT_ACTIVE === 'true';
 const ownerNumber = process.env.OWNER_NUMBER;
 
+// Rate limit config
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 menit
+const RATE_LIMIT_MAX = 8;
+const userRateLimits = new Map(); // key: sender, value: [timestamps[]]
+
 // Ensure directories exist
 async function ensureDirectories() {
     await fs.ensureDir('auth_info');
     await fs.ensureDir('logs');
-    
-    // Create log file if not exists
+
     const logFile = path.join('logs', 'log.json');
     if (!await fs.pathExists(logFile)) {
         await fs.writeJson(logFile, []);
     }
+}
+
+// Rate limit checker
+function isRateLimited(sender) {
+    const now = Date.now();
+    const timestamps = userRateLimits.get(sender) || [];
+
+    // Filter timestamps to only include within window
+    const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+
+    if (recent.length >= RATE_LIMIT_MAX) {
+        return true;
+    }
+
+    recent.push(now);
+    userRateLimits.set(sender, recent);
+    return false;
 }
 
 // Handle incoming messages
@@ -35,11 +56,10 @@ async function handleMessage(msg) {
         if (!messageInfo) return;
 
         const { sender, text, messageId, timestamp } = messageInfo;
-        
-        // Log incoming message
+
         await logMessage('incoming', sender, text, messageId, timestamp);
 
-        // Check if message is from owner for bot commands
+        // Bot command (from owner only)
         if (isOwnerMessage(sender, ownerNumber)) {
             if (text.toLowerCase() === '/bot on') {
                 botActive = true;
@@ -59,15 +79,10 @@ async function handleMessage(msg) {
             }
         }
 
-        // Skip if bot is not active
         if (!botActive) return;
 
-        // Check if message is valid and about IT
-        if (!isValidMessage(msg) || !isITQuestion(text)) {
-            return;
-        }
+        if (!isValidMessage(msg) || !isITQuestion(text)) return;
 
-        // Handle image messages
         if (msg.message.imageMessage) {
             const reply = "Maaf, saya belum bisa memproses gambar saat ini.";
             await sock.sendMessage(sender, { text: reply });
@@ -75,19 +90,23 @@ async function handleMessage(msg) {
             return;
         }
 
-        // Send typing indicator
+        // ✅ Rate limit check
+        if (isRateLimited(sender)) {
+            const warning = "⚠️ Kamu mengirim pesan terlalu cepat. Tunggu sebentar ya sebelum bertanya lagi.";
+            await sock.sendMessage(sender, { text: warning });
+            await logMessage('outgoing', sender, warning, null, Date.now());
+            return;
+        }
+
         await sock.sendPresenceUpdate('composing', sender);
 
-        // Get AI response
         const aiResponse = await askDeepSeek(text);
-        
+
         if (aiResponse) {
-            // Send AI response
             await sock.sendMessage(sender, { text: aiResponse });
             await logMessage('outgoing', sender, aiResponse, null, Date.now());
         }
 
-        // Clear typing indicator
         await sock.sendPresenceUpdate('available', sender);
 
     } catch (error) {
@@ -100,9 +119,9 @@ async function handleMessage(msg) {
 async function connectToWhatsApp() {
     try {
         await ensureDirectories();
-        
+
         const { state, saveCreds } = await useMultiFileAuthState('auth_info');
-        
+
         sock = makeWASocket({
             auth: state,
             printQRInTerminal: false,
@@ -110,20 +129,19 @@ async function connectToWhatsApp() {
             browser: ['IT Helper Bot', 'Chrome', '1.0.0']
         });
 
-        // Handle QR code
         sock.ev.on('connection.update', (update) => {
             const { connection, lastDisconnect, qr } = update;
-            
+
             if (qr) {
                 console.log('\n🔗 Scan QR code ini untuk login WhatsApp:\n');
                 qrcode.generate(qr, { small: true });
                 console.log('\n📱 Buka WhatsApp > Perangkat Tertaut > Tautkan Perangkat\n');
             }
-            
+
             if (connection === 'close') {
                 const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
                 console.log('❌ Koneksi terputus:', lastDisconnect?.error);
-                
+
                 if (shouldReconnect) {
                     console.log('🔄 Mencoba reconnect...');
                     setTimeout(connectToWhatsApp, 5000);
@@ -139,13 +157,11 @@ async function connectToWhatsApp() {
             }
         });
 
-        // Save credentials
         sock.ev.on('creds.update', saveCreds);
 
-        // Handle messages
         sock.ev.on('messages.upsert', async ({ messages }) => {
             for (const msg of messages) {
-                if (msg.key.fromMe) continue; // Skip own messages
+                if (msg.key.fromMe) continue;
                 await handleMessage(msg);
             }
         });
@@ -156,7 +172,6 @@ async function connectToWhatsApp() {
     }
 }
 
-// Handle process termination
 process.on('SIGINT', async () => {
     console.log('\n🛑 Menghentikan bot...');
     if (sock) {
@@ -165,7 +180,6 @@ process.on('SIGINT', async () => {
     process.exit(0);
 });
 
-// Start the bot
 console.log('🚀 Memulai IT Helper Bot...');
 console.log('📧 Dibuat oleh: Firdaus Yusuf');
 console.log('🤖 AI Models: Mistral 7B → DeepSeek R1');
