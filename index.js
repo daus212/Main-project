@@ -168,6 +168,7 @@ process.on('SIGINT', async () => {
 // Start the bot
 console.log('🚀 Memulai IT Helper Bot...');
 console.log('📧 Dibuat oleh: Firdaus Yusuf');
-console.log('🔧 Model: DeepSeek Chat via OpenRouter\n');
+console.log('🤖 AI Models: Mistral 7B → DeepSeek R1');
+console.log('⚡ Strategy: Cepat untuk ringan, Dalam untuk kompleks\n');
 
 connectToWhatsApp();
