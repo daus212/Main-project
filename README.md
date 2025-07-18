@@ -2,6 +2,26 @@
 
 Bot WhatsApp otomatis yang membantu menjawab pertanyaan seputar IT ringan menggunakan AI DeepSeek Chat melalui OpenRouter API.
 
+## 🧠 **Dual AI Model System:**
+
+Bot menggunakan strategi cerdas dengan 2 model AI:
+
+### 🚀 **Mistral 7B (Primary)**
+- **Untuk:** Pertanyaan IT ringan dan umum
+- **Keunggulan:** Cepat, efisien, hemat cost
+- **Contoh:** "Cara install driver", "WiFi lemot", "Shortcut keyboard"
+
+### 🔧 **DeepSeek R1 (Fallback)**  
+- **Untuk:** Troubleshooting kompleks dan error handling
+- **Keunggulan:** Analisis mendalam, reasoning kuat
+- **Contoh:** "Blue screen error", "System corrupt", "Advanced troubleshooting"
+
+### 🎯 **Auto-Switch Logic:**
+1. **Deteksi Kompleksitas** - Bot otomatis deteksi tingkat kesulitan
+2. **Mistral First** - Coba model ringan dulu untuk efisiensi  
+3. **Quality Check** - Evaluasi kualitas response
+4. **Smart Fallback** - Switch ke DeepSeek R1 jika dibutuhkan
+
 ## 🤖 Fitur
 
 - ✅ **Otomatis menjawab pertanyaan IT** - Hanya merespons pertanyaan yang berkaitan dengan teknologi
