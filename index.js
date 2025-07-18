@@ -121,7 +121,7 @@ async function connectToWhatsApp() {
             }
             
             if (connection === 'close') {
-                const shouldReconnect = (lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut;
+                const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
                 console.log('❌ Koneksi terputus:', lastDisconnect?.error);
                 
                 if (shouldReconnect) {
