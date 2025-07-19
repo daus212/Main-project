@@ -39,6 +39,16 @@ const Home = () => {
 };
 
 function App() {
+  const [showStartup, setShowStartup] = useState(true);
+
+  const handleStartupComplete = () => {
+    setShowStartup(false);
+  };
+
+  if (showStartup) {
+    return <StartupAnimation onComplete={handleStartupComplete} />;
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
