@@ -15,6 +15,7 @@ const { isValidMessage, isITQuestion, isOwnerMessage } = require('./lib/utils');
 let sock;
 let botActive = process.env.BOT_ACTIVE === 'true';
 const ownerNumber = process.env.OWNER_NUMBER;
+let isReconnecting = false; // Prevent multiple reconnection attempts
 
 // Rate limit config
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 menit
