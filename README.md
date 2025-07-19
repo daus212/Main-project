@@ -56,7 +56,7 @@ whatsapp-bot/
 
 ### 1. Clone atau Download Proyek
 ```bash
-git clone <repository-url>
+git clone https://github.com/daus212/Main-project
 cd whatsapp-bot
 ```
 
