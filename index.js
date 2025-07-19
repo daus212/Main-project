@@ -132,7 +132,12 @@ async function handleMessage(msg) {
 
     } catch (error) {
         console.error('Error handling message:', error);
-        await logMessage('error', null, error.message, null, Date.now());
+        // Safe logging with fallback
+        try {
+            await logMessage('error', null, error.message, null, Date.now());
+        } catch (logError) {
+            console.error('Failed to log error:', logError);
+        }
     }
 }
 
