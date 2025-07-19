@@ -169,13 +169,18 @@ async function connectToWhatsApp() {
                 const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
                 console.log('❌ Koneksi terputus:', lastDisconnect?.error);
 
-                if (shouldReconnect) {
+                if (shouldReconnect && !isReconnecting) {
+                    isReconnecting = true;
                     console.log('🔄 Mencoba reconnect...');
-                    setTimeout(connectToWhatsApp, 5000);
+                    setTimeout(() => {
+                        isReconnecting = false;
+                        connectToWhatsApp();
+                    }, 5000);
                 } else {
                     console.log('🚪 Logged out, silakan restart aplikasi');
                 }
             } else if (connection === 'open') {
+                isReconnecting = false; // Reset reconnection flag
                 console.log('✅ Berhasil terhubung ke WhatsApp!');
                 console.log(`🤖 Bot Status: ${botActive ? 'Aktif' : 'Nonaktif'}`);
                 if (ownerNumber) {
