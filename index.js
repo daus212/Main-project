@@ -160,9 +160,15 @@ async function connectToWhatsApp() {
             const { connection, lastDisconnect, qr } = update;
 
             if (qr) {
-                console.log('\n🔗 Scan QR code ini untuk login WhatsApp:\n');
+                console.log('\n' + '\x1b[33m' + '╔═══════════════════════════════════════════════════════════════╗' + '\x1b[0m');
+                console.log('\x1b[33m' + '║                    📱 SCAN QR CODE TO LOGIN                    ║' + '\x1b[0m');
+                console.log('\x1b[33m' + '╚═══════════════════════════════════════════════════════════════╝' + '\x1b[0m');
                 qrcode.generate(qr, { small: true });
-                console.log('\n📱 Buka WhatsApp > Perangkat Tertaut > Tautkan Perangkat\n');
+                console.log('\n\x1b[36m📲 Langkah:\x1b[0m');
+                console.log('\x1b[32m   1. Buka WhatsApp di HP\x1b[0m');
+                console.log('\x1b[32m   2. Menu > Perangkat Tertaut\x1b[0m');
+                console.log('\x1b[32m   3. Tautkan Perangkat\x1b[0m');
+                console.log('\x1b[32m   4. Scan QR code di atas\x1b[0m\n');
             }
 
             if (connection === 'close') {
