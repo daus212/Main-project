@@ -57,7 +57,7 @@ whatsapp-bot/
 ### 1. Clone atau Download Proyek
 ```bash
 git clone https://github.com/daus212/Main-project
-cd whatsapp-bot
+cd Main-project
 ```
 
 ### 2. Install Dependencies
