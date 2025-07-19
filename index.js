@@ -113,7 +113,10 @@ async function handleMessage(msg) {
             return;
         }
 
-        await sock.sendPresenceUpdate('composing', sender);
+        // Check if sock is connected before sending presence
+        if (sock && sock.user) {
+            await sock.sendPresenceUpdate('composing', sender);
+        }
 
         const aiResponse = await askDeepSeek(text);
 
@@ -122,7 +125,10 @@ async function handleMessage(msg) {
             await logMessage('outgoing', sender, aiResponse, null, Date.now());
         }
 
-        await sock.sendPresenceUpdate('available', sender);
+        // Check if sock is connected before sending presence
+        if (sock && sock.user) {
+            await sock.sendPresenceUpdate('available', sender);
+        }
 
     } catch (error) {
         console.error('Error handling message:', error);
