@@ -21,6 +21,19 @@ const RATE_LIMIT_WINDOW = 60 * 1000; // 1 menit
 const RATE_LIMIT_MAX = 8;
 const userRateLimits = new Map(); // key: sender, value: [timestamps[]]
 
+// Memory management: clean old rate limit entries
+setInterval(() => {
+    const now = Date.now();
+    for (const [sender, timestamps] of userRateLimits.entries()) {
+        const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+        if (recent.length === 0) {
+            userRateLimits.delete(sender);
+        } else {
+            userRateLimits.set(sender, recent);
+        }
+    }
+}, 300000); // Clean every 5 minutes
+
 // Ensure directories exist
 async function ensureDirectories() {
     await fs.ensureDir('auth_info');
