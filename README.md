@@ -62,7 +62,7 @@ cd whatsapp-bot
 
 ### 2. Install Dependencies
 ```bash
-npm install
+dalam project folder (Main-project) jalankan npm install
 ```
 
 ### 3. Konfigurasi Environment
@@ -75,7 +75,7 @@ OPENROUTER_API_KEY=your_openrouter_api_key_here
 # Bot Configuration
 BOT_ACTIVE=true
 BOT_NAME=IT Helper Bot
-OWNER_NUMBER=628123456789  # Nomor WhatsApp owner (opsional)
+OWNER_NUMBER=your number  # Nomor WhatsApp owner (opsional)
 
 # DeepSeek Model Configuration
 MODEL_NAME=deepseek/deepseek-chat
