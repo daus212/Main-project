@@ -181,11 +181,16 @@ async function connectToWhatsApp() {
                 }
             } else if (connection === 'open') {
                 isReconnecting = false; // Reset reconnection flag
-                console.log('✅ Berhasil terhubung ke WhatsApp!');
-                console.log(`🤖 Bot Status: ${botActive ? 'Aktif' : 'Nonaktif'}`);
-                if (ownerNumber) {
-                    console.log(`👤 Owner: ${ownerNumber}`);
+                console.log('\n' + '\x1b[32m' + '╔═══════════════════════════════════════╗' + '\x1b[0m');
+                console.log('\x1b[32m' + '║        ✅ CONNECTED TO WHATSAPP!       ║' + '\x1b[0m');
+                console.log('\x1b[32m' + '╚═══════════════════════════════════════╝' + '\x1b[0m');
+                console.log(`\x1b[36m🤖 Bot Status: ${botActive ? '\x1b[32mAktif ✅' : '\x1b[31mNonaktif ❌'}\x1b[0m`);
+                if (ownerNumber && ownerNumber !== 'your_whatsapp_number_here') {
+                    console.log(`\x1b[33m👤 Owner: ${ownerNumber}\x1b[0m`);
+                } else {
+                    console.log(`\x1b[31m⚠️  Owner: Not configured (check .env)\x1b[0m`);
                 }
+                console.log('\x1b[36m📱 Bot siap menerima pesan IT!\x1b[0m\n');
             }
         });
 
