@@ -61,17 +61,19 @@ async function handleMessage(msg) {
 
         // Bot command (from owner only)
         if (isOwnerMessage(sender, ownerNumber)) {
-            if (text.toLowerCase() === '/bot on') {
+            const command = text.toLowerCase();
+            
+            if (command === '/bot on' || command === '/on') {
                 botActive = true;
                 await sock.sendMessage(sender, { text: '✅ Bot telah diaktifkan' });
                 await logMessage('outgoing', sender, '✅ Bot telah diaktifkan', null, Date.now());
                 return;
-            } else if (text.toLowerCase() === '/bot off') {
+            } else if (command === '/bot off' || command === '/off') {
                 botActive = false;
                 await sock.sendMessage(sender, { text: '❌ Bot telah dinonaktifkan' });
                 await logMessage('outgoing', sender, '❌ Bot telah dinonaktifkan', null, Date.now());
                 return;
-            } else if (text.toLowerCase() === '/status') {
+            } else if (command === '/status') {
                 const status = botActive ? 'Aktif ✅' : 'Nonaktif ❌';
                 await sock.sendMessage(sender, { text: `Status Bot: ${status}` });
                 await logMessage('outgoing', sender, `Status Bot: ${status}`, null, Date.now());
