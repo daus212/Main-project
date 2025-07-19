@@ -212,9 +212,17 @@ process.on('SIGINT', async () => {
     process.exit(0);
 });
 
-console.log('🚀 Memulai IT Helper Bot...');
-console.log('📧 Dibuat oleh: Firdaus Yusuf');
-console.log('🤖 AI Models: Mistral 7B → DeepSeek R1');
-console.log('⚡ Strategy: Cepat untuk ringan, Dalam untuk kompleks\n');
+// ASCII Art Banner
+console.log('\n\x1b[36m' + `
+╔═══════════════════════════════════════════════════════════════╗
+║                    🤖 WHATSAPP IT HELPER BOT 🤖                ║
+║                         ⚡ DEEPSEEK POWERED ⚡                  ║
+╚═══════════════════════════════════════════════════════════════╝
+` + '\x1b[0m');
+
+console.log('\x1b[32m🚀 Memulai IT Helper Bot...\x1b[0m');
+console.log('\x1b[33m📧 Dibuat oleh: Firdaus Yusuf\x1b[0m');
+console.log('\x1b[35m🤖 AI Models: Mistral 7B → DeepSeek R1\x1b[0m');
+console.log('\x1b[36m💡 Ready to help with IT problems!\x1b[0m\n');
 
 connectToWhatsApp();
